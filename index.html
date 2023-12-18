@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Documentation Generator</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://community.appinventor.mit.edu/uploads/default/optimized/1X/eb712f6cf942a3f2221d9e579a9284a31022c803_2_32x32.png">
+    <style>
+        #drop-area {
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background-color: #E0D2AE;
+            cursor: pointer;
+        }
+
+        #documentationContainer {
+            border-radius: 10px;
+            padding: 30px;
+            background-color: #E0D2AE;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        #progress-container {
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            width: 70%;
+            background-color: #E5B4B4;
+            border-radius: 10px;
+        }
+
+        #progress-bar {
+            width: 0;
+            height: 30px;
+            background-color: #BF4343;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            border-radius: 10px;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        #codeCopy {
+            display: inline-block;
+            cursor: pointer;
+            padding: 4px;
+            display: none;
+        }
+
+        #userCode {
+            border: none;
+            background-color: #CBBACE;
+            border-radius: 3px;
+            width: 110px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        #code {
+            cursor: pointer;
+        }
+
+        #menuLabel,
+        #colorLabel,
+        #imageLabel {
+            color: white;
+            display: inline-block;
+        }
+
+        .diva {
+            display: inline-block;
+            border-radius: 5px;
+            padding: 3px;
+            background-color: #439970;
+            border-color: #439970;
+            cursor: default;
+        }
+
+        #main {
+            padding: 5px 20px 10px 20px;
+        }
+
+        #menu {
+            padding: 5px 20px 5px 20px;
+        }
+
+        .divc {
+            border: none;
+            background-color: #b4d6c6;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        body {
+            background-color: #B18E35;
+        }
+
+        .divb {
+            display: inline-block;
+            border-color: #7C5385;
+            background-color: #7C5385;
+            border-radius: 5px;
+            padding: 4px 5px 4px 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #divGen {
+            padding: 0px 0px 5px 20px;
+        }
+
+        #sign {
+            display: none;
+        }
+
+        #download {
+            display: none;
+        }
+
+        footer {
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+ 
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+<body>
+
+    <div id="overlay">
+        <div id="progress-container">
+            <div id="progress-bar">0%</div>
+        </div>
+    </div>
+
+    <div id="menu">
+
+        <button class="diva" disabled>
+            <label id="colorLabel" for="setColor">Blocks color style:
+                <select class="divc" id="setColor" onchange="changeColor()">
+                    <option value="" style="display:none;"></option>
+                    <option value="appInventor">App Inventor</option>
+                    <option value="kodular">Kodular</option>
+                </select>
+            </label>
+        </button>
+
+        <button class="diva" disabled>
+            <label id="imageLabel" for="setImage">Blocks image type:
+                <select class="divc" id="setImage" onchange="changeImage()">
+                    <option value="" style="display:none;"></option>
+                    <option value="svg">SVG </option>
+                    <option value="png">PNG </option>
+                </select>
+            </label>
+        </button>
+
+        <button class="diva" disabled>
+            <label id="menuLabel" for="setMenu">Documentation:
+                <select class="divc" id="setMenu" onchange="changeMenu()">
+                    <option value="" style="display:none;"></option>
+                    <option value="menu">with menu</option>
+                    <option value="noMenu">without menu</option>
+                </select>
+            </label>
+        </button>
+
+        <button class="divb" onclick="auth()">Authorize</button>
+
+        <button class="divb" id="sign" onclick="signIn()">Sign In</button>
+
+        <button class="divb" id="codeCopy" onclick="copyUserCode()">
+            <label id="code" for="userCode">Copy user code:</label>
+            <input type="text" id="userCode" value="VHB-DVX-TZD" readonly>
+        </button>
+
+    </div>
+
+    <div id="main">
+        <div id="drop-area">
+            Drag and drop the file here or click to select a file.
+            <input type="file" id="aixFileInput" style="display: none;" accept=".aix">
+        </div>
+    </div>
+
+    <div id="divGen">
+        <button class="divb" onclick="getNewToken()">Generate documentation</button>
+        <button class="divb" onclick="localStorage.clear()">Clean data</button>
+        <div id="download">
+            <button class="divb" onclick="copyToClipboard()">Copy to clipboard</button>
+            <button class="divb" onclick="downloadDocumentation()">Download txt file</button>
+        </div>
+    </div>
+
+    <div id="documentationContainer"></div>
+
+    <footer>
+        &copy; 2023 <a href="https://community.appinventor.mit.edu/u/Patryk_F/summary" target="_blank">Patryk_F</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script>
+        const progressBar = document.getElementById('progress-bar');
+        const overlay = document.getElementById('overlay');
+        const userCodeInput = document.getElementById('userCode');
+        const codeLabel = document.getElementById('codeCopy');
+        const selectCol = document.getElementById("setColor");
+        const selectImg = document.getElementById("setImage");
+        const selectMenu = document.getElementById("setMenu");
+        const dropArea = document.getElementById('drop-area');
+        const download = document.getElementById('download');
+        const fileInput = document.getElementById('aixFileInput');
+        const sign = document.getElementById('sign');
+        const canvas2 = document.createElement('canvas');
+        const ctx2 = canvas2.getContext('2d');
+        const clientSecret = process.env.CLIENT_SECRET;
+        const clientId = "300634564848-vr0em7appqilp40pt3spaja35j2c9q15.apps.googleusercontent.com";
+
+        let jsonData;
+        let documentationMenu;
+        let documentation;
+        let count;
+        let filesToUpload;
+        let filesToDoc;
+        let totalFiles;
+        let filesUploaded;
+        let imageType;
+        let refreshToken = '';
+        let accessToken = '';
+        let deviceCode = '';
+        let files = [];
+        let green1 = '#439970';
+        let green2 = '#B4D6C6';
+        let purple1 = '#7C5385';
+        let purple2 = '#CBBACE';
+        let red1 = '#BF4343';
+        let red2 = '#E5B4B4';
+        let brown1 = '#B18E35';
+        let brown2 = '#E0D2AE';
+        let red = '#DE8F6C';
+        let menu;
+
+        function showCodeLabel() {
+            codeLabel.style.display = 'inline';
+        }
+
+        function hideCodeLabel() {
+            codeLabel.style.display = 'none';
+        }
+
+        function showCodeSign() {
+            sign.style.display = 'inline';
+        }
+
+        function hideCodeSign() {
+            sign.style.display = 'none';
+        }
+
+        function showCodeDown() {
+            download.style.display = 'inline';
+        }
+
+        function hideCodeDown() {
+            download.style.display = 'none';
+        }
+
+        function changeMenu() {
+            let selectedValue = selectMenu.options[selectMenu.selectedIndex].value;
+            localStorage.setItem('menu', selectedValue);
+            menu = selectedValue === 'menu' ? true : false;
+        }
+
+        function changeColor() {
+            let selectedValue = selectCol.options[selectCol.selectedIndex].value;
+            localStorage.setItem('colorValue', selectedValue);
+            if (selectedValue === "appInventor") {
+                green1 = '#439970';
+                green2 = '#B4D6C6';
+                purple1 = '#7C5385';
+                purple2 = '#CBBACE';
+                red1 = '#BF4343';
+                brown1 = '#B18E35';
+                brown2 = '#E0D2AE';
+            } else if (selectedValue === "kodular") {
+                green1 = '#388E3C';
+                green2 = '#AFD2B1';
+                purple1 = '#5E35B1';
+                purple2 = '#BFAEE0';
+                red1 = '#C54343';
+                brown1 = '#FFA726';
+                brown2 = '#FFDCA8';
+            }
+            document.body.style.backgroundColor = brown1;
+            dropArea.style.backgroundColor = brown2;
+            document.querySelectorAll('.diva').forEach(function (button) {
+                button.style.backgroundColor = green1;
+            });
+            buttons = document.querySelectorAll('.divb');
+            document.querySelectorAll('.divb').forEach(function (button) {
+                button.style.backgroundColor = purple1;
+            });
+            buttons = document.querySelectorAll('.divc');
+            document.querySelectorAll('.divc').forEach(function (select) {
+                select.style.backgroundColor = green2;
+            });
+        }
+
+        function changeImage() {
+            imageType = selectImg.options[selectImg.selectedIndex].value;
+            localStorage.setItem('imageValue', imageType);
+        }
+
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            });
+
+        dropArea.addEventListener('dragleave', () => {
+            });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            files = e.dataTransfer.files;
+            if (files.length > 0) {
+                let file = files[0];
+                handleFile(file);
+            }
+        });
+
+        dropArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            files = fileInput.files;
+            if (files.length > 0) {
+                let file = files[0];
+                handleFile(file);
+            }
+        });
+
+        function handleFile(file) {
+            dropArea.innerHTML = 'Drag and drop the file here or click to select a file.<br>Selected file: ' + file.name;
+        }
+
+        function copyUserCode() {
+            userCodeInput.select();
+            userCodeInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+        }
+
+        function readData() {
+            canvas2.width = 200;
+            canvas2.height = 200;
+            ctx2.font = '11pt Arial';
+            let val = localStorage.getItem('colorValue');
+            if (val != null) {
+                selectCol.value = val;
+
+            } else {
+                selectCol.value = 'appInventor';
+                localStorage.setItem('colorValue', 'appInventor');
+            }
+            changeColor()
+            let val1 = localStorage.getItem('imageValue');
+            if (val1 != null) {
+                selectImg.value = val1;
+                imageType = val1;
+            } else {
+                selectImg.value = 'svg';
+                localStorage.setItem('imageValue', 'svg');
+                imageType = 'svg';
+            }
+
+            let val2 = localStorage.getItem('menu');
+            if (val2 != null) {
+                selectMenu.value = val2;
+            } else {
+                selectMenu.value = 'menu';
+                localStorage.setItem('menu', 'menu');
+
+            }
+            changeMenu();
+            
+            refreshToken = localStorage.getItem('refreshToken');
+            accessToken = localStorage.getItem('accessToken');
+        }
+
+        async function auth() {
+            const inputValue = clientId === null ? '' : clientId;
+            const { value: ipAddress } = await Swal.fire({
+                title: "Enter Client ID:",
+                input: "text",
+                background: green1,
+                color: 'white',
+                confirmButtonColor: purple1,
+                cancelButtonColor: purple2,
+                inputAttributes: { style: `background-color: ${green2}; color: black; border: none;  `, },
+                inputValue,
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (value != '') {
+                        if (value != clientId) {
+                            clientId = value;
+                            
+                        }
+                        getDeviceCode();
+                    } else {
+                        return "This text field cannot be empty!";
+                    }
+                }
+            });
+        }
+
+        function getDeviceCode() {
+            if (clientId.length > 0) {
+
+                fetch('https://oauth2.googleapis.com/device/code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', },
+                    body: `client_id=${encodeURIComponent(clientId)}&scope=${encodeURIComponent('https://www.googleapis.com/auth/drive.file')}`,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if ('error' in data) {
+                            
+                            let error;
+                            if (data.error === 'invalid_client') {
+                                error = 'Invalid OAuth client Id!';
+                            } else {
+                                error = data.error_description;
+                            }
+                            Swal.fire({
+                                icon: "error",
+                                text: error,
+                                background: red1,
+                                color: 'white',
+                                confirmButtonColor: purple1,
+                            });
+                        } else {
+                            showCodeLabel();
+                            deviceCode = data.device_code;
+                            showCodeSign();
+                            document.getElementById('userCode').value = data.user_code;
+                            copyUserCode();
+                            codeLabel.click();
+                            const url = 'https://www.google.com/device';
+                            window.open(url, '_blank', 'width=400,height=800');
+                        }
+                    });
+            }
+        }
+
+        async function signIn() {
+            hideCodeLabel()
+            const inputValue = clientSecret === null ? '' : clientSecret;
+            const { value: secret } = await Swal.fire({
+                title: "Enter client secret code:",
+                input: "text",
+                background: green1,
+                color: 'white',
+                confirmButtonColor: purple1,
+                cancelButtonColor: purple2,
+                inputAttributes: { style: `background-color: ${green2}; color: black; border: none;  `, },
+                inputValue,
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (value != '') {
+                        if (value != clientSecret) {
+                            clientSecret = value;
+                            console.log('value: ' + value);
+                            
+                        }
+                        getToken();
+                    } else {
+                        return "Client secret cannot be empty!";
+                    }
+
+                }
+            });
+        }
+
+        function getToken() {
+            if (deviceCode.length > 0) {
+                const data = new URLSearchParams();
+                data.append('client_id', clientId);
+                data.append('client_secret', clientSecret);
+                data.append('device_code', deviceCode);
+                data.append('grant_type', 'urn:ietf:params:oauth:grant-type:device_code');
+                fetch('https://accounts.google.com/o/oauth2/token', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', },
+                    body: data,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if ('error' in data) {
+                            localStorage.removeItem('clientSecret');
+                            clientSecret = null;
+                            let error;
+                            if (data.error === 'invalid_client') {
+                                error = 'Invalid client secret code.';
+                            } else if (data.error === 'authorization_pending') {
+                                error = 'Authorization is pending.';
+                            } else {
+                                error = data.error_description;
+                            }
+                            Swal.fire({
+                                icon: "error",
+                                text: error,
+                                background: red1,
+                                color: 'white',
+                                confirmButtonColor: purple1,
+                            });
+                        } else {
+                            hideCodeSign();
+                            accessToken = data.access_token;
+                            refreshToken = data.refresh_token;
+                            localStorage.setItem('refreshToken', refreshToken);
+                            localStorage.setItem('accessToken', accessToken);
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                background: green1,
+                                color: 'white',
+                                title: "Authorization successful!",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+            }
+        }
+
+        function getNewToken() {
+            if (refreshToken != null) {
+                if (files.length > 0) {
+                    updateProgress(1, 0)
+                    startProgress();
+                    const data = new URLSearchParams();
+                    data.append('client_id', clientId);
+                    data.append('client_secret', clientSecret);
+                    data.append('refresh_token', refreshToken);
+                    data.append('grant_type', 'refresh_token');
+                    fetch('https://accounts.google.com/o/oauth2/token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: data,
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Token response:', data);
+                            accessToken = data.access_token;
+                            localStorage.setItem('accessToken', accessToken);
+                            generateAndDownloadDocumentation()
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            stopProgress();
+                        });
+
+                } else {
+
+                    Swal.fire({
+                        icon: "info",
+                        text: 'Please select the AIX extension file.',
+                        background: green1,
+                        color: 'white',
+                        confirmButtonColor: purple1,
+                    });
+                }
+            } else {
+                Swal.fire({
+                    icon: "info",
+                    text: 'Please Sign In first.',
+                    background: green1,
+                    color: 'white',
+                    confirmButtonColor: purple1,
+                });
+            }
+        }
+
+        function generateAndDownloadDocumentation() {
+            totalFiles = 0;
+            filesUploaded = 0;
+            documentationMenu = '';
+            count = 0;
+            filesToUpload = [];
+            filesToDoc = [];
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const aixFileContent = e.target.result;
+                JSZip.loadAsync(aixFileContent)
+                    .then(function (zip) {
+                        const jsonFiles = Object.keys(zip.files).filter(fileName => fileName.endsWith('.json'));
+                        if (jsonFiles.length > 0) {
+                            const desiredJsonFile = jsonFiles.find(fileName => fileName.includes('components.json'));
+                            if (desiredJsonFile) {
+                                return zip.file(desiredJsonFile).async('text');
+                            } else {
+                                stopProgress();
+                                Swal.fire({
+                                    icon: "info",
+                                    text: 'Desired JSON file not found in the archive.',
+                                    background: green1,
+                                    color: 'white',
+                                    confirmButtonColor: purple1,
+                                });
+                            }
+                        } else {
+                            stopProgress();
+                            Swal.fire({
+                                icon: "info",
+                                text: 'No JSON files found in the archive.',
+                                background: green1,
+                                color: 'white',
+                                confirmButtonColor: purple1,
+                            });
+                        }
+                    })
+                    .then(function (jsonContent) {
+                        jsonData = JSON.parse(jsonContent);
+                        generateFilesToUploadFromJson();
+                    });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function downloadDocumentation() {
+            if (documentation) {
+                const blob = new Blob([documentation], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'documentation.txt';
+                link.click();
+            }
+        }
+
+        function displayDocumentation() {
+            const documentationContainer = document.getElementById('documentationContainer');
+            documentationContainer.innerHTML = documentation;
+            documentationContainer.style.display = 'block';
+            stopProgress();
+        }
+
+        function copyToClipboard() {
+            const textarea = document.createElement('textarea');
+            textarea.value = documentation;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        function startProgress() {
+            overlay.style.display = 'block';
+        }
+
+        function stopProgress() {
+            overlay.style.display = 'none';
+        }
+
+        function updateProgress(totalfiles, filesuploaded) {
+            let progress = Math.round((filesuploaded / totalfiles) * 100);
+            progressBar.style.width = progress + '%';
+            progressBar.innerHTML = progress + '%';
+        }
+
+        async function generateFilesToUploadFromJson() {
+            if (jsonData[0].events.length > 0) {
+                await generateFiles('Events', jsonData[0].events);
+            }
+            if (jsonData[0].methods.length > 0) {
+                await generateFiles('Methods', jsonData[0].methods);
+            }
+            if (jsonData[0].blockProperties.length > 0) {
+                await generateFiles('Properties', jsonData[0].blockProperties);
+            }
+            createFolder()
+                .then(() => {
+                    console.log('All files uploaded and permissions set successfully.');
+                    generateDocumentationFromJson();
+                })
+                .catch(error => {
+                    stopProgress();
+                    console.error('Error creating folder or uploading/setting permissions for files:', error);
+                });
+            return true;
+        }
+
+        async function generateFiles(sectionName, items,) {
+            if (items.length > 0) {
+                for (const item of items) {
+                    if (item.rw && item.rw.toLowerCase() === 'invisible') {
+                        continue;
+                    }
+                    if (sectionName === 'Properties') {
+                        if (item.rw.toLowerCase() === 'read-only') {
+                            filesToUpload.push({ name: `${item.name}_Get_Property.${imageType}`, content: await generateGetPropertyBlock(jsonData[0].name, item) });
+                        } else if (item.rw.toLowerCase() === 'write-only') {
+                            filesToUpload.push({ name: `${item.name}_Set_Property.${imageType}`, content: await generateSetPropertyBlock(jsonData[0].name, item) });
+                        } else if (item.rw.toLowerCase() === 'read-write') {
+                            filesToUpload.push({ name: `${item.name}_Get_Property.${imageType}`, content: await generateGetPropertyBlock(jsonData[0].name, item) });
+                            filesToUpload.push({ name: `${item.name}_Set_Property.${imageType}`, content: await generateSetPropertyBlock(jsonData[0].name, item) });
+                        }
+                    } else if (sectionName === 'Events') {
+                        filesToUpload.push({ name: `${item.name}_Event.${imageType}`, content: await generateEventBlock(jsonData[0].name, item) });
+                    } else {
+                        filesToUpload.push({ name: `${item.name}_Method.${imageType}`, content: await generateMethodBlock(jsonData[0].name, item) });
+                    }
+                }
+            }
+        }
+
+        function generateDocumentationFromJson() {
+            documentation = `</ul><h1>Blocks</h1>`;
+            documentationMenu += `<h1>Description</h1>`;
+            documentationMenu += `${jsonData[0].helpString}`;
+            documentationMenu += menu ? `<h1>Table of Contents</h1><ul>` : '';
+            if (jsonData[0].events.length > 0) {
+                documentation += generateSection('Events', jsonData[0].events);
+                documentationMenu += menu ? `</ul></li>` : '';
+            }
+            if (jsonData[0].methods.length > 0) {
+                documentation += generateSection('Methods', jsonData[0].methods);
+                documentationMenu += menu ? `</ul></li>` : '';
+            }
+            if (jsonData[0].blockProperties.length > 0) {
+                documentation += generateSection('Properties', jsonData[0].blockProperties);
+                documentationMenu += menu ? `</ul></li>` : '';
+            }
+            documentation += `<h1>Download</h1>`;
+
+            documentation = documentationMenu + documentation;
+
+            displayDocumentation(documentation);
+            showCodeDown()
+        }
+
+        function generateSection(sectionName, items) {
+            let section = '';
+            if (menu) {
+                section += `<h2>${sectionName}</h2><details><a name="${count}"></a><summary> </summary>`;
+            } else {
+                section += `<h2>${sectionName}</h2><details><summary> </summary>`;
+            }
+            documentationMenu += menu ? `<li><a href="#${count}">${sectionName}</a><ul>` : '';
+            count++;
+            if (items.length > 0) {
+                for (const item of items) {
+                    if (item.rw && item.rw.toLowerCase() === 'invisible') {
+                        continue;
+                    }
+                    if (menu) {
+                        section += `<blockquote><h3>${item.name}</h3><details><a name="${count}"></a><summary> </summary>`;
+                    } else {
+                        section += `<blockquote><h3>${item.name}</h3><details><summary> </summary>`;
+                    }
+                    documentationMenu += menu ? `<li><a href="#${count}">${item.name}</a></li>` : '';
+                    count++;
+                    section += `<p><b>Description:</b> ${item.description}</p>`;
+                    //----------------------------------------------------------------------------------------------------------------------------------------------------
+                    if (sectionName === 'Properties') {
+                        if (item.rw.toLowerCase() === 'read-only') {
+                            section += `<p><b>Block:</b> <img src="${(filesToDoc.find(file => file.name === (item.name + '_Get_Property.' + imageType))).path}"></p>`;
+                        } else if (item.rw.toLowerCase() === 'write-only') {
+                            section += `<p><b>Block:</b> <img src="${(filesToDoc.find(file => file.name === (item.name + '_Set_Property.' + imageType))).path}"></p>`;
+                        } else if (item.rw.toLowerCase() === 'read-write') {
+                            section += `<p><b>Block (Get):</b> <img src="${(filesToDoc.find(file => file.name === (item.name + '_Get_Property.' + imageType))).path}"></p>`;
+                            section += `<p><b>Block (Set):</b> <img src="${(filesToDoc.find(file => file.name === (item.name + '_Set_Property.' + imageType))).path}"></p>`;
+                        }
+                    } else if (sectionName === 'Events') {
+                        section += `<p><b>Block:</b> <img src="${(filesToDoc.find(file => file.name === (item.name + '_Event.' + imageType))).path}"></p>`;
+                    } else {
+                        section += `<p><b>Block:</b> <img src="${(filesToDoc.find(file => file.name === (item.name + '_Method.' + imageType))).path}"></p>`;
+                    }
+                    if (item.params && item.params.length > 0) {
+                        if (sectionName === 'Events') {
+                            section += `<b>Returns:</b>`;
+                        } else {
+                            section += `<b>Parameters:</b>`;
+                        }
+                        section += `<ul>`;
+                        for (const param of item.params) {
+                            if (param.helper) {
+                                section += `<li>${param.name}: ${param.type.split('.').pop()}<ul>`;
+                            } else {
+                                section += `<li>${param.name}: ${param.type}</li>`;
+                            }
+                            if (param.helper && param.helper.type === 'OPTION_LIST') {
+                                const options = param.helper.data.options;
+                                const returnType = param.helper.data.underlyingType.split('.').pop();
+                                for (const option of options) {
+                                    const value = option.value;
+                                    const formattedValue = returnType === 'String' ? `"${value}"` : value;
+                                    const isDefault = option.name === param.helper.data.defaultOpt ? ' (default)' : '';
+                                    section += `<li>${option.name}: ${formattedValue}${isDefault}</li>`;
+                                }
+                                section += `</ul></li>`;
+                            } else if (item.helper && item.helper.type === 'ASSET') {
+
+                            }
+                        }
+                        section += `</ul>`;
+                        if ('returnType' in item) {
+                            section += `<p><b>Returns:</b> ${item.returnType.split('.').pop()}</p><br>`;
+                        }
+                    }
+                    if (item.helper && item.helper.type === 'OPTION_LIST') {
+                        if ('returnType' in item) {
+                        } else {
+                            section += `<b>Options:</b>`;
+                        }
+                        section += `<ul>`;
+                        const options = item.helper.data.options;
+                        const returnType = item.helper.data.underlyingType.split('.').pop();
+                        for (const option of options) {
+                            const value = option.value;
+                            const formattedValue = returnType === 'String' ? `"${value}"` : value;
+                            //    const isDefault = option.name === item.helper.data.defaultOpt ? ' (default)' : '';
+                            section += `<li>${option.name}: ${formattedValue}</li>`;
+                        }
+                        section += `</ul>`;
+                    } else if (item.helper && item.helper.type === 'ASSET') {
+
+                    }
+                    section += `</details></blockquote>`;
+                }
+            }
+            section += `</details>`;
+            return section;
+        }
+
+        async function createFolder() {
+            const url = 'https://www.googleapis.com/drive/v3/files';
+            accessToken = localStorage.getItem('accessToken');
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: jsonData[0].name,
+                    mimeType: 'application/vnd.google-apps.folder',
+                    parents: ['root']
+                })
+            });
+            const result = await response.json();
+            const newFolderId = result.id;
+            console.log('Folder created, ID:', result.id);
+            return uploadAndSetPermissionsSequentially(filesToUpload, newFolderId);
+        }
+
+        function uploadFile(file, folderId) {
+            const { name, content } = file;
+            const formData = new FormData();
+            formData.append('metadata', new Blob([JSON.stringify({ name, mimeType: `image/${imageType === 'png' ? 'png' : 'svg+xml'}`, parents: [folderId] })], { type: 'application/json' }));
+            formData.append('file', new Blob([content], { type: `image/${imageType === 'png' ? 'png' : 'svg+xml'}` }));
+            return fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const fileId = data.id;
+                    filesUploaded++;
+                    updateProgress(totalFiles, filesUploaded);
+                    console.log(`File count:'${filesUploaded}/${totalFiles}`);
+
+                    filesToDoc.push({ name: `${name}`, path: `https://drive.google.com/uc?id=${fileId}` });
+
+                    return fileId;
+                })
+                .catch(error => {
+                    stopProgress();
+                    console.error(`Error uploading file '${name}':`, error);
+                    throw error;
+                });
+        }
+
+        function setFilePermissions(fileId) {
+            return fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    role: 'reader',
+                    type: 'anyone',
+                    allowFileDiscovery: false,
+                }),
+            })
+                .then(response => response.json())
+                .then(permissionData => {
+                    filesUploaded++;
+                    updateProgress(totalFiles, filesUploaded);
+                    console.log(`File count:'${filesUploaded}/${totalFiles}`);
+                    return fileId;
+                })
+                .catch(error => {
+                    stopProgress();
+                    console.error('Error setting file permissions:', error);
+                    throw error;
+                });
+        }
+
+        function uploadAndSetPermissionsSequentially(files, parentFolderId, index = 0) {
+            totalFiles = files.length * 2;
+            if (index < files.length) {
+                return uploadFile(files[index], parentFolderId)
+                    .then(fileId => setFilePermissions(fileId))
+                    .then(() => uploadAndSetPermissionsSequentially(files, parentFolderId, index + 1));
+            } else {
+                return Promise.resolve();
+            }
+        }
+
+        function svg2png(svg) {
+            return new Promise((resolve, reject) => {
+                const svgElement = new DOMParser().parseFromString(svg, 'image/svg+xml').querySelector('svg');
+                canvas2.width = svgElement.getAttribute('width');
+                canvas2.height = svgElement.getAttribute('height');
+                const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+                const img = new Image();
+                img.onload = function () {
+                    ctx2.drawImage(img, 0, 0);
+                    canvas2.toBlob(pngBlob => { resolve(pngBlob); }, 'image/png');
+                };
+                img.onerror = function () {
+                    reject(new Error('Error loading SVG image.'));
+                };
+                img.src = url;
+            });
+        }
+
+        async function generateMethodBlock(extension, parameters) {
+            let functions = ('.' + parameters.name);
+            let functionsWidth = lengthText(functions);
+            let extensionWidth = lengthText(extension + '1');
+            let lengthBlock = 61 + lengthText('call') + extensionWidth + functionsWidth + lengthText('▾');
+            lengthBlock = parseFloat(lengthBlock.toFixed(1));
+            let isHelper = 'helper' in parameters;
+            let paramsLength = parameters.params.length;
+            let returns = parameters.hasOwnProperty('returnType');
+            let helperlength = 0;
+            let helperName = '';
+            let helperValue = '';
+            let helperValuelength = 0;
+            let helperNamelength = 0;
+            if (isHelper) {
+                helperName = parameters.helper.data.tag;
+                helperValue = parameters.helper.data.defaultOpt;
+                helperNamelength = lengthText(helperName);
+                helperValuelength = lengthText(helperValue);
+                helperlength = helperNamelength + helperValuelength + 57;
+            }
+            if (returns) {
+                if (paramsLength > 0) {
+                    //return with parameters
+                    lengthBlock -= 1;
+                    let block = `<svg width="${parseNumber(lengthBlock + 8)}" height="${parseNumber(57 + (22 * paramsLength))}" xmlns="http://www.w3.org/2000/svg"><path transform="translate(8,0)" fill="${purple1}" d="m0 0H${lengthBlock}v30c0 10-8-8-8 7.5s8-2.5 8 7.5`
+                    for (let i = 0; i < paramsLength - 1; i++) {
+                        block += `v10c0 10-8-8-8 7.5s8-2.5 8 7.5`
+                    }
+                    block += `v4H0V20c0-10-8 8-8-7.5s8 2.5 8-7.5z"/><rect fill="${purple2}" x="50" rx="4" ry="4" y="5" height="16" width="${parseNumber(extensionWidth + 25)}"/><text fill="white" x="18" y="18" font-family="Arial" font-size="11pt"><tspan>call</tspan><tspan fill="black" dx="15">${extension + "1"}</tspan><tspan dx="4" fill="${purple1}">▾</tspan><tspan dx="9">${functions}</tspan>`
+                    let paramName = parameters.params[0].name;
+                    let nameWidth = lengthText(paramName);
+                    block += `<tspan x="${parseNumber(lengthBlock - nameWidth - 13)}" dy="25">${paramName}</tspan>`
+                    for (let i = 1; i < paramsLength; i++) {
+                        let paramName = parameters.params[i].name;
+                        let nameWidth = lengthText(paramName);
+                        block += `<tspan x="${parseNumber(lengthBlock - nameWidth - 13)}" dy="25">${paramName}</tspan>`
+                    }
+                    block += `</text></svg>`
+                    block = block.replace("_", "%5F");
+                    if (imageType === 'png') {
+                        return await svg2png(block);
+                    } else {
+                        return block;
+                    }
+                } else {
+                    //return without parameters
+                    lengthBlock -= 2;
+                    let block = `<svg width="${lengthBlock}" height="33" xmlns="http://www.w3.org/2000/svg"><path transform="translate(8,0)" fill="${purple1}" d="m0 0H${lengthBlock}v25H0V20c0-10-8,8-8-7.5s8 2.5 8-7.5z"/><rect fill="${purple2}" x="50" rx="4" ry="4" y="5" height="16" width="${parseNumber(extensionWidth + 25)}"/><text fill="white" x="18" y="18" font-family="Arial" font-size="11pt"><tspan>call</tspan><tspan fill="black" dx="15">${extension + "1"}</tspan><tspan dx="4" fill="${purple1}">▾</tspan><tspan dx="9">${functions}</tspan></text></svg>`
+                    block = block.replace("_", "%5F");
+                    if (imageType === 'png') {
+                        return await svg2png(block);
+                    } else {
+                        return block;
+                    }
+                }
+            } else {
+                if (paramsLength > 0) {
+                    //set with parameters
+                    lengthBlock -= 2;
+                    let block = `<svg width="${lengthBlock}" height="${parseNumber(57 + (22 * paramsLength))}" xmlns="http://www.w3.org/2000/svg"><path fill="${purple1}" d="m0 8A8 8 0 0 1 8 0H15l6 4 3 0 6-4H${lengthBlock}v25v5c0 10-8-8-8 7.5s8-2.5 8 7.5`
+                    for (let i = 0; i < paramsLength - 1; i++) {
+                        block += `v10c0 10-8-8-8 7.5s8-2.5 8 7.5`
+                    }
+                    block += `v4H29.5l-6 4-3 0-6-4H8a8 8 0 0 1-8-8z"/><rect fill="${purple2}" x="42" rx="4" ry="4" y="5" height="16" width="${parseNumber(extensionWidth + 25)}"/><text fill="white" x="10" y="18" font-family="Arial" font-size="11pt"><tspan>call</tspan><tspan fill="black" dx="15">${extension + "1"}</tspan><tspan dx="4" fill="${purple1}">▾</tspan><tspan dx="9">${functions}</tspan>`
+                    let paramName = parameters.params[0].name;
+                    let nameWidth = lengthText(paramName);
+                    block += `<tspan x="${parseNumber(lengthBlock - nameWidth - 20)}" dy="25">${paramName}</tspan>`
+                    for (let i = 1; i < paramsLength; i++) {
+                        let paramName = parameters.params[i].name;
+                        let nameWidth = lengthText(paramName);
+                        block += `<tspan x="${parseNumber(lengthBlock - nameWidth - 20)}" dy="25">${paramName}</tspan>`
+                    }
+                    block += `</text></svg>`
+                    block = block.replace("_", "%5F");
+                    if (imageType === 'png') {
+                        return await svg2png(block);
+                    } else {
+                        return block;
+                    }
+                } else {
+                    //set without parameters
+                    lengthBlock -= 8;
+                    let block = `<svg width="${lengthBlock}" height="33" xmlns="http://www.w3.org/2000/svg"><path fill="${purple1}" d="m0 8A8 8 0 0 1 8 0H15l6 4 3 0 6-4H${lengthBlock}v25H29.5l-6 4-3 0-6-4H8a8 8 0 0 1-8-8z"/><rect fill="${purple2}" x="42" rx="4" ry="4" y="5" height="16" width="${parseNumber(extensionWidth + 25)}"/><text fill="white" x="10" y="18" font-family="Arial" font-size="11pt"><tspan>call</tspan><tspan fill="black" dx="15">${extension + "1"}</tspan><tspan dx="4" fill="${purple1}">▾</tspan><tspan dx="9">${functions}</tspan></text></svg>`
+                    if (imageType === 'png') {
+                        return await svg2png(block);
+                    } else {
+                        return block;
+                    }
+                }
+            }
+        }
+
+        async function generateSetPropertyBlock(extension, parameters) {
+            let functions = parameters.name;
+            let functionsWidth = lengthText(functions);
+            let extensionWidth = lengthText(extension + '1');
+            let lengthBlock = parseFloat((85 + lengthText('set') + extensionWidth + functionsWidth + lengthText('to') + lengthText('▾▾.')).toFixed(1));
+            let isHelper = 'helper' in parameters;
+            let helperlength = 0;
+            let helperName = '';
+            let helperValue = '';
+            let helperValuelength = 0;
+            let helperNamelength = 0;
+            if (isHelper) {
+                helperName = parameters.helper.data.tag;
+                helperValue = parameters.helper.data.defaultOpt;
+                helperNamelength = lengthText(helperName);
+                helperValuelength = lengthText(helperValue);
+                helperlength = helperNamelength + helperValuelength + 60;
+            }
+            let block = `<svg width="${lengthBlock}" height="33" xmlns="http://www.w3.org/2000/svg"><path fill="${green1}" d="m0 8A8 8 0 0 1 8 0H15l6 4 3 0 6-4H${lengthBlock}v5 c0 10-8-8-8,7.5s8-2.5 8 7.5v5H29.5l-6 4-3 0-6-4H8a8 8 0 0 1-8-8z"/><rect fill="${green2}" x="39" rx="4" ry="4" y="5" height="16" width="${parseNumber(extensionWidth + 26)}"/><rect fill="${green2}" x="${parseNumber(extensionWidth + 79)}" rx="4" ry="4" y="5" height="16" width="${parseNumber(functionsWidth + 26)}"/><text fill="white" x="10" y="18" font-family="Arial" font-size="11pt"><tspan>set</tspan><tspan fill="black" dx="15">${extension + "1"}</tspan><tspan dx="4" fill="${green1}">▾</tspan><tspan dx="9">.</tspan><tspan dx="10" fill="black">${functions}</tspan><tspan dx="4" fill="${green1}">▾</tspan><tspan dx="10">to</tspan></text></svg>`
+            if (imageType === 'png') {
+                return await svg2png(block);
+            } else {
+                return block;
+            }
+        }
+
+        async function generateGetPropertyBlock(extension, parameters) {
+            let functions = parameters.name;
+            let functionsWidth = lengthText(functions);
+            let extensionWidth = lengthText(extension + '1');
+            let lengthBlock = 56 + extensionWidth + functionsWidth + lengthText('▾▾.');
+            lengthBlock = parseFloat(lengthBlock.toFixed(1));
+            let block = `<svg width="${lengthBlock}" height="33" xmlns="http://www.w3.org/2000/svg"><path transform="translate(8,0)" fill="${green1}" d="m0 0H${lengthBlock}v25H0V20c0-10-8 8-8-7.5s8 2.5 8-7.5z"/><rect fill="${green2}" x="13" rx="4" ry="4" y="5" height="16" width="${(extensionWidth + 26)}"/><rect fill="${green2}" x="${parseNumber(extensionWidth + 53)}" rx="4" ry="4" y="5" height="16" width="${parseNumber(functionsWidth + 26)}"/><text fill="black" x="18" y="18" font-family="Arial" font-size="11pt"><tspan>${extension + "1"}</tspan><tspan dx="4" fill="${green1}">▾</tspan><tspan fill="white" dx="10">.</tspan><tspan dx="10">${functions}</tspan><tspan dx="4" fill="${green1}">▾</tspan></text></svg>`
+            if (imageType === 'png') {
+                return await svg2png(block);
+            } else {
+                return block;
+            }
+        }
+
+        async function generateEventBlock(extension, parameters) {
+            let functions = ('.' + parameters.name);
+            let functionsWidth = lengthText(functions);
+            let extensionWidth = lengthText(extension + '1');
+            let lengthBlock = 51 + lengthText('when') + extensionWidth + functionsWidth + lengthText('▾');
+            let paramsLength = parameters.params.length;
+            let paramsBlock = '';
+            let paramsRect = '';
+            let length1 = 38;
+            let lengthName = 0;
+            let paramName = '';
+            let lengthRect = 18;
+            if (paramsLength > 0) {
+                paramName = parameters.params[0].name;
+                lengthName = lengthText(paramName);
+                paramsBlock = `<tspan fill="black" x="24" dy="25">${paramName}</tspan>`;
+                length1 += lengthName + 14;
+                paramsRect = `<rect fill="${red}" x="${lengthRect}" rx="4" ry="4" y="30" height="16" width="${parseNumber(lengthName + 14)}"/>`;
+                lengthRect += lengthName + 26;
+                for (let i = 1; i < paramsLength; i++) {
+                    paramName = parameters.params[i].name;
+                    lengthName = lengthText(paramName);
+                    paramsRect += `<rect fill="${red}" x="${lengthRect}" rx="4" ry="4" y="30" height="16" width="${parseNumber(lengthName + 14)}"/>`;
+                    lengthRect += (lengthName + 26);
+                    length1 += lengthName + 26;
+                    paramsBlock += `<tspan fill="black" dx="26">${paramName}</tspan>`;
+                }
+                if (length1 >= lengthBlock) {
+                    lengthBlock = length1;
+                }
+            }
+            lengthBlock = parseFloat(lengthBlock.toFixed(1));
+            if (paramsLength > 0) {
+                //event with parameters
+                lengthBlock -= 1;
+                let block = `<svg width="${lengthBlock}" height="85" xmlns="http://www.w3.org/2000/svg"><path fill="${brown1}" d="m0 8A8 8 0 0 1 8 0H${lengthBlock}v50H66.6l-6 4-3 0-6-4h-7a8 8 0 0 0-8 8v8a8 8 0 0 0 8 8H${lengthBlock}v10H8a8 8 0 0 1-8-8z"/><rect fill="${brown2}" x="54" rx="4" ry="4" y="5" height="16" width="${parseNumber(extensionWidth + 25)}"/>`;
+                block += paramsRect;
+                block += `<text fill="white" x="9" y="18" font-family="Arial" font-size="11pt"><tspan>when</tspan><tspan fill="black" dx="15">${extension + "1"}</tspan><tspan dx="4" fill="${brown1}">▾</tspan><tspan dx="9">${functions}</tspan>`;
+                block += paramsBlock;
+                block += `<tspan fill="white" x="9" dy="25">do</tspan>`;
+                block += `</text></svg>`;
+                if (imageType === 'png') {
+                    return await svg2png(block);
+                } else {
+                    return block;
+                }
+            } else {
+                //event without parameters
+                lengthBlock -= 2;
+                let block = `<svg width="${lengthBlock}" height="60" xmlns="http://www.w3.org/2000/svg"><path fill="${brown1}" d="m0 8A8 8 0 0 1 8 0H${lengthBlock}v25H66.6l-6 4-3 0-6-4h-7a8 8 0 0 0-8 8v8a8 8 0 0 0 8 8H${lengthBlock}v10H8a8 8 0 0 1-8-8z"/><rect fill="${brown2}" x="54" rx="4" ry="4" y="5" height="16" width="${parseNumber(extensionWidth + 25)}"/><text fill="white" x="9" y="18" font-family="Arial" font-size="11pt"><tspan>when</tspan><tspan fill="black" dx="15">${extension + "1"}</tspan><tspan dx="4" fill="${brown1}">▾</tspan><tspan dx="9">${functions}</tspan><tspan x="9" dy="25">do</tspan></text></svg>`
+                if (imageType === 'png') {
+                    return await svg2png(block);
+                } else {
+                    return block;
+                }
+            }
+        }
+
+        function lengthText(text) {
+            ctx2.font = '11pt Arial';
+            return parseFloat(ctx2.measureText(text).width.toFixed(1));
+        }
+
+        function parseNumber(number) {
+            return parseFloat(number.toFixed(1));
+        }
+
+        window.onload = readData();
+    </script>
+</body>
+
+</html>
