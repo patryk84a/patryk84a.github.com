@@ -7,8 +7,21 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
             line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .cv-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+            padding: 20px; /* Dodano padding */
+            box-sizing: border-box; /* Uwzględnienie paddingu w szerokości */
         }
         h1, h2, h3 {
             color: #333;
@@ -57,7 +70,7 @@
         }
         .interests-item {
             border: 1px solid #ccc;
-            background-color: #faf5bf; /* Lekko żółte tło */
+            background-color: #fffde7; /* Lekko żółte tło */
             padding: 10px;
             margin-bottom: 10px;
         }
@@ -74,80 +87,104 @@
         .position {
             margin-bottom: 5px;
         }
+        @media print {
+            body {
+                background-color: white;
+                min-height: auto;
+                display: block;
+            }
+            .cv-container {
+                width: 100%;
+                min-height: auto;
+                box-shadow: none;
+                padding: 0;
+            }
+            table {
+                margin-bottom: 10px;
+            }
+            td {
+                padding: 5px;
+            }
+            .section-title {
+                margin-bottom: 5px;
+            }
+            .experience-item, .education-item, .interests-item {
+                margin-bottom: 5px;
+            }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <table>
-            <tr>
-                <td><h1>Patryk Frączek</h1></td>
-                <td class="contact-info">
-                    <p><span aria-label="Kraj">🌍</span> Poland</p>
-                    <p><span aria-label="Email">📧</span> <a href="mailto:froniu84a@gmail.com">froniu84a@gmail.com</a></p>
-                    <p><span aria-label="Data urodzenia">🎂</span> 29.07.1984, Inowrocław, Poland</p>
-                </td>
-            </tr>
-        </table>
-    </header>
+    <div class="cv-container">
+        <header>
+            <table>
+                <tr>
+                    <td><h1>Patryk Frączek</h1></td>
+                    <td class="contact-info">
+                        <p><span aria-label="Kraj">🌍</span> Poland</p>
+                        <p><span aria-label="Email">📧</span> <a href="mailto:froniu84a@gmail.com">froniu84a@gmail.com</a></p>
+                        <p><span aria-label="Data urodzenia">🎂</span> 29.07.1984, Inowrocław, Poland</p>
+                    </td>
+                </tr>
+            </table>
+        </header>
 
-    <main>
-        <section>
-            <h2 class="section-title">Work Experience</h2>
-            <div class="experience-item">
-                <p><span class="company">Lidl, Venlo, NL</span> <span class="company-description">- Lidl chain store warehouse</span></p>
-                <p class="period">2020 – 2025</p>
-                <p class="position">reach truck operator</p>
-            </div>
-            <div class="experience-item">
-                <p><span class="company">Intratuin, Venlo, NL</span> <span class="company-description">- warehouse of the Intratuin chain of garden stores.</span></p>
-                <p class="period">2015 – 2020</p>
-                <p class="position">forklift operator</p>
-            </div>
-            <div class="experience-item">
-                <p><span class="company">El-System, Inowrocław, PL</span> <span class="company-description">- automation installations in industrial plants</span></p>
-                <p class="period">2013 – 2015</p>
-                <p class="position">electrician, automation engineer</p>
-            </div>
-            <div class="experience-item">
-                <p><span class="company">P.W. Bemix, Więcbork, PL</span> <span class="company-description">- manufacturer of metal components for power hydraulics</span></p>
-                <p class="period">2009 – 2013</p>
-                <p class="position">CNC programmer, maintenance electrician</p>
-            </div>
-            <div class="experience-item">
-                <p><span class="company">Wizamor Sp. Z. o. o, Więcbork, PL</span> <span class="company-description">- manufacturer of metal components for power hydraulics</span></p>
-                <p class="period">2006 – 2009</p>
-                <p class="position">CNC operator and setter</p>
-            </div>
-            <div class="experience-item">
-                <p><span class="company">Junget Sp. Z. o. o, Więcbork, PL</span> <span class="company-description">- Sales and service of woodworking machines.</span></p>
-                <p class="period">2004 - 2006</p>
-                <p class="position">automation engineer, service technician</p>
-            </div>
-        </section>
+        <main>
+            <section>
+                <h2 class="section-title">Work Experience</h2>
+                <div class="experience-item">
+                    <p><span class="company">Lidl, Venlo, NL</span> <span class="company-description">- Lidl chain store warehouse</span></p>
+                    <p class="period">2020 – 2025</p>
+                    <p class="position">reach truck operator</p>
+                </div>
+                <div class="experience-item">
+                    <p><span class="company">Intratuin, Venlo, NL</span> <span class="company-description">- warehouse of the Intratuin chain of garden stores.</span></p>
+                    <p class="period">2015 – 2020</p>
+                    <p class="position">forklift operator</p>
+                </div>
+                <div class="experience-item">
+                    <p><span class="company">El-System, Inowrocław, PL</span> <span class="company-description">- automation installations in industrial plants</span></p>
+                    <p class="period">2013 – 2015</p>
+                    <p class="position">electrician, automation engineer</p>
+                </div>
+                <div class="experience-item">
+                    <p><span class="company">P.W. Bemix, Więcbork, PL</span> <span class="company-description">- manufacturer of metal components for power hydraulics</span></p>
+                    <p class="period">2009 – 2013</p>
+                    <p class="position">CNC programmer, maintenance electrician</p>
+                </div>
+                <div class="experience-item">
+                    <p><span class="company">Wizamor Sp. Z. o. o, Więcbork, PL</span> <span class="company-description">- manufacturer of metal components for power hydraulics</span></p>
+                    <p class="period">2006 – 2009</p>
+                    <p class="position">CNC operator and setter</p>
+                </div>
+                <div class="experience-item">
+                    <p><span class="company">Junget Sp. Z. o. o, Więcbork, PL</span> <span class="company-description">- Sales and service of woodworking machines.</span></p>
+                    <p class="period">2004 - 2006</p>
+                    <p class="position">automation engineer, service technician</p>
+                </div>
+            </section>
 
-        <section>
-            <h2 class="section-title">Education</h2>
-            <div class="education-item">
-                <p class="company">Primary school, Janikowo, PL</p>
-                <p class="period">1991 - 1999</p>
-            </div>
-            <div class="education-item">
-                <p class="company">Electronic technical School, Inowrocław, PL</p>
-                <p class="period">1999 – 2004</p>
-                <p class="position">Specialization:  industrial automation</p>
-            </div>
-        </section>
+            <section>
+                <h2 class="section-title">Education</h2>
+                <div class="education-item">
+                    <p class="company">Primary school, Janikowo, PL</p>
+                    <p class="period">1991 - 1999</p>
+                </div>
+                <div class="education-item">
+                    <p class="company">Electronic technical School, Inowrocław, PL</p>
+                    <p class="period">1999 – 2004</p>
+                    <p class="position">Specialization:  industrial automation</p>
+                </div>
+            </section>
 
-        <section>
-            <h2 class="section-title">Interests</h2>
-            <div class="interests-item">
-                <p>electronics</p>
-                <p>programming in: java, java script, c++</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-    </footer>
+            <section>
+                <h2 class="section-title">Interests</h2>
+                <div class="interests-item">
+                    <p>electronics</p>
+                    <p>programming in: java, java script, c++</p>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 </html>

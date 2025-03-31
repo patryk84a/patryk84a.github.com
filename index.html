@@ -11,6 +11,15 @@
             line-height: 1.6;
         }
 
+        .ans-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            background-color: rgb(212, 235, 248);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -36,11 +45,12 @@
             border-top: 1px solid #ccc;
         }
         .hidden {
-            display: none;
+            display: block;
         }
     </style>
 </head>
 <body>
+    <div class="ans-container"></div>
     <header>
         <h1>GSOC Application - Patryk F</h1>
     </header>
@@ -80,28 +90,7 @@
         <section id="app-inventor-design-challenge">
             <h2>App Inventor Design Challenge</h2>
             <p><b>Why did UseFront stop working?</b></p>
-            <p>In older versions of Android, applications could directly specify which camera (front or back) to use by adding an "extra" to the <code>MediaStore.ACTION_IMAGE_CAPTURE</code> intent. The <code>android.intent.extras.CAMERA_FACING</code> extra was used for this purpose, with values of <code>0</code> (back) or <code>1</code> (front).</p>
-            <p>However, newer versions of Android (from Android 5.0 Lollipop onwards) introduced significant changes to the camera API, replacing the deprecated API with the new Camera2 API. In this new API, applications can no longer directly force the use of a specific camera using an "extra" in the intent.</p>
-            <p>The Camera2 API gives applications more control over the camera, but it requires more code. Key classes in the Camera2 API are <code>CameraManager</code>, <code>CameraCharacteristics</code>, and <code>CameraDevice</code>. Applications must iterate through the available cameras and check their characteristics (e.g., whether it is a front or back camera) using <code>CameraCharacteristics.LENS_FACING</code>. I think we should restore the <code>UseFront</code> property, and to achieve this goal, we should switch to the Camera2 API.</p>
-            <p>To restore the <code>UseFront</code> functionality, App Inventor must use the Camera2 API and check if the front camera is available.</p>
-            <p>Example:</p>
-            <pre>
-              <code>
-                CameraManager cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
-                try {
-                  for (String cameraId : cameraManager.getCameraIdList()) {
-                    CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
-                    Integer lensFacing = characteristics.get(CameraCharacteristics.LENS_FACING);
-                    if (lensFacing != null && lensFacing == CameraCharacteristics.LENS_FACING_FRONT) {
-                      return cameraId;
-                    }
-                  }
-                } catch (CameraAccessException e) {
-                  return null;
-                }
-              </code>
-            </pre>
-            <p>It is also worth mentioning CameraX, a newer library that simplifies the use of the Camera2 API.</p>
+            <p>In older versions of Android, applications could directly specify which camera (front or back) to use by adding an "extra" to the <code>MediaStore.ACTION_IMAGE_CAPTURE</code> intent. The <code>android.intent.extras.CAMERA_FACING</code> extra was used for this purpose, with values of <code>0</code> (back) or <code>1</code> (front). However, newer versions of Android (from Android 5.0 Lollipop onwards) modified this method by removing this "extra", and therefore it no longer works.</p>
             <p><b>Automatic Photo Capture without User Intervention</b></p>
             <p>In App Inventor, taking photos has traditionally required user interaction with an external camera application. The App Inventor application would invoke an intent to launch the camera app. The user would then have to manually press the "shutter button," and the camera app would return the URI of the captured image. This approach made it impossible to take photos automatically, for example, from the Clock component, without user involvement.</p>
             <p>To enable automatic photo capture, it is necessary to use the camera API directly within the App Inventor component, without relying on an external application. Considering that App Inventor supports devices with a minimum SDK level of 7, the most reasonable solution is to use the deprecated <code>android.hardware.Camera</code> API.</p>
@@ -209,12 +198,8 @@
             <p><b>Adding a Preview:</b></p>
   <p>The current implementation takes photos without a preview. To make the component more elegant, a live preview can be added. To do this, the component would need to be made visible and based on the <code>SurfaceView</code>. To set the preview, use <code>camera.setPreviewDisplay(surfaceView.getHolder());</code>.</p>
 </section>
-
+</div>
     </main>
-
-    <footer>
-        <p>Created by Patryk F</p>
-    </footer>
     <script>
         const hash = window.location.hash;
         if (hash) {
