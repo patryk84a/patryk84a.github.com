@@ -4,38 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GSOC Application - Patryk F</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
             line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
         }
 
-        .ans-container {
-            width: 21cm;
-            min-height: 29.7cm;
-            background-color: rgb(212, 235, 248);
+        .application-container {
+            width: 22cm;
+            background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 40px;
             box-sizing: border-box;
+
+           
         }
+        
 
         header {
-            text-align: center;
+            text-align: left;
             margin-bottom: 30px;
         }
 
-        h1, h2 {
+        h1, h2, h3 {
             color: #333;
         }
 
         section {
-            margin-bottom: 40px;
-            display: none;
+            margin-bottom: 30px;
+            
         }
 
         section h2 {
             margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
         }
 
         footer {
@@ -44,171 +54,229 @@
             padding-top: 20px;
             border-top: 1px solid #ccc;
         }
-        .hidden {
-            display: block;
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+            white-space: pre-wrap;
         }
+
+        pre[class*="language-"] {
+            font-size: 0.8em;
+            padding: 1em;
+            margin: .5em 0;
+            overflow: auto;
+            border-radius: 0.3em;
+            
+        }
+
+
+        .code-container{
+          justify-content: center;
+            display: inline-block;
+        }
+
+        .code-size {
+            width:100%;
+            text-align: center;
+        }
+
+        code {
+          font-size: 1.2em;
+          
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+        .section-title {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        @media print {
+            body {
+                background-color: white;
+                min-height: auto;
+                display: block;
+            }
+            .application-container {
+                width: 100%;
+                min-height: auto;
+                box-shadow: none;
+                padding: 0;
+            }
+            table {
+                margin-bottom: 10px;
+            }
+            td {
+                padding: 5px;
+            }
+            .section-title {
+                margin-bottom: 5px;
+            }
+        }
+
+         
+        
     </style>
 </head>
 <body>
-    <div class="ans-container"></div>
-    <header>
-        <h1>GSOC Application - Patryk F</h1>
-    </header>
+    <div class="application-container">
+        <header>
+            <h1>GSOC Application - Patryk F</h1>
+        </header>
 
-    <main>
-        <section id="interest-in-app-inventor">
-            <h2>Interest in App Inventor</h2>
-            <p>I am interested in developing App Inventor because I believe in its educational potential. I would like to improve components and add new features so that novice programmers, including children and youth, can create advanced applications without using extensions. I have learned programming thanks to App Inventor.</p>
-        </section>
+        <main>
+            <section id="interest-in-app-inventor">
+                <h2 class="section-title">Interest in App Inventor</h2>
+                <p>I am interested App Inventor because I believe in its educational potential. I have learned programming thanks to App Inventor. I would like to improve components and add new features so that novice programmers, including children and youth, can create advanced applications without using extensions.</p>
+            </section>
 
-        <section id="proposed-summer-project">
-            <h2>Proposed summer project</h2>
-            <p>I would like to continue working on the ListView component, which fascinates me with its possibilities. My recent PR with a new layout is just the beginning. I propose creating an "Element Layout Editor" that would allow for the creation of custom layouts beyond the five predefined ones. The editor would enable the use of images, main and detailed text, vertical and horizontal arrangements, and alignment settings. Additionally, I would like to add a grid layout, which, combined with the image (top) layout, would create a gallery effect. Another feature would be "Page Snapping," ideal for creating photo viewers. I would also like to contribute to the development of ListView for iOS. I want this component to be as versatile, efficient and intuitive as possible.</p>
-        </section>
+            <section id="proposed-summer-project">
+                <h2 class="section-title">Proposed summer project</h2>
+                I would like to continue working on the ListView component, which fascinates me with its possibilities. My recent PR with a new layout is just the beginning. I propose creating an "Element Layout Editor" that would allow for the creation of custom layouts beyond the five predefined ones. The editor would enable the use of images, main and detailed text, vertical and horizontal arrangements, and alignment settings. Additionally, I would like to add a grid layout, snapping elements as they scroll and I would like to complete the multi-select functions. I would also like to contribute to the development of ListView for iOS. I want this component to be as versatile, efficient and intuitive as possible.</p>
+              </section>
 
-        <section id="interest-in-introductory-programming">
-            <h2>Interest in introductory programming</h2>
-            <p>I have no formal teaching experience, but programming is my hobby, which I developed thanks to App Inventor. As a PowerUser in the App Inventor community, I help novice users solve problems, which indirectly contributes to their learning. I am happy to share my knowledge and help others.</p>
-        </section>
+            <section id="interest-in-introductory-programming">
+                <h2 class="section-title">Interest in introductory programming</h2>
+                <p>I have no formal teaching experience, but programming is my hobby, which I developed thanks to App Inventor. As a PowerUser in the App Inventor community, I help novice users solve problems, which indirectly contributes to their learning. I am happy to share my knowledge and help others.</p>
+            </section>
 
-        <section id="experience-with-development-tools">
-            <h2>Experience with development tools</h2>
-            <p>My experience with development tools is mainly related to the App Inventor repository. I contributed to the refactoring of the ListView and Slider components and created the <code>@UsesXml</code> annotation. I have also created several extensions for App Inventor.</p>
-            <ul>
-                <li><a href="https://github.com/patryk84a">My GitHub profile</a></li>
-            </ul>
-        </section>
+            <section id="experience-with-development-tools">
+                <h2 class="section-title">Experience with development tools</h2>
+                <p>My experience with development tools is mainly related to the App Inventor repository. I contributed to the refactoring of the ListView and Slider components and created the <code>@UsesXml</code> annotation. I have also created several extensions for App Inventor.</p>
+                <ul>
+                    <li><a href="https://github.com/patryk84a">My GitHub profile</a></li>
+                </ul>
+            </section>
 
-        <section id="experience-with-teams">
-            <h2>Experience with teams, online developer communities, and large code bases</h2>
-            <p>My experience with large codebases is based on working with the App Inventor repository. I participated in the refactoring of components, which required understanding the code structure and collaborating with other developers. Additionally, as a PowerUser in the App Inventor community, I actively help other users, which requires cooperation and communication.</p>
-            <ul>
-                <li><a href="https://community.appinventor.mit.edu/u/patryk_f/activity">My App Inventor community profile</a></li>
-            </ul>
-        </section>
+            <section id="experience-with-teams">
+                <h2 class="section-title">Experience with teams, online developer communities, and large code bases</h2>
+                <p>My experience with large codebases is based on working with the App Inventor repository. I participated in the refactoring of components, which required understanding the code structure and collaborating with other developers. Additionally, as a PowerUser in the App Inventor community, I actively help other users, which requires cooperation and communication.</p>
+                <ul>
+                    <li><a href="https://community.appinventor.mit.edu/u/patryk_f/activity">My App Inventor community profile</a></li>
+                </ul>
+            </section>
 
-        <section id="app-inventor-design-challenge">
-            <h2>App Inventor Design Challenge</h2>
-            <p><b>Why did UseFront stop working?</b></p>
-            <p>In older versions of Android, applications could directly specify which camera (front or back) to use by adding an "extra" to the <code>MediaStore.ACTION_IMAGE_CAPTURE</code> intent. The <code>android.intent.extras.CAMERA_FACING</code> extra was used for this purpose, with values of <code>0</code> (back) or <code>1</code> (front). However, newer versions of Android (from Android 5.0 Lollipop onwards) modified this method by removing this "extra", and therefore it no longer works.</p>
-            <p><b>Automatic Photo Capture without User Intervention</b></p>
-            <p>In App Inventor, taking photos has traditionally required user interaction with an external camera application. The App Inventor application would invoke an intent to launch the camera app. The user would then have to manually press the "shutter button," and the camera app would return the URI of the captured image. This approach made it impossible to take photos automatically, for example, from the Clock component, without user involvement.</p>
-            <p>To enable automatic photo capture, it is necessary to use the camera API directly within the App Inventor component, without relying on an external application. Considering that App Inventor supports devices with a minimum SDK level of 7, the most reasonable solution is to use the deprecated <code>android.hardware.Camera</code> API.</p>
-            <p><b>Implementation:</b></p>
-            <p>Below are the key elements of the implementation for automatic photo capture without a preview:</p>
-            <p><b>1. Method <code>TakeAutoPicture()</code>:</b></p>
-            <p>This method is responsible for initiating the photo-taking process.</p>
-            <ul>
-              <li>Checks if the application has the necessary permissions to use the camera and write to external storage. If not, it requests these permissions from the user.</li>
-              <li>Opens a camera instance using <code>android.hardware.Camera.open()</code>.</li>
-              <li>Retrieves the list of supported picture sizes using <code>camera.getParameters().getSupportedPictureSizes()</code>.</li>
-              <li>Selects the largest available picture size to ensure the best possible quality.</li>
-              <li>Sets the selected picture size using <code>parameters.setPictureSize()</code>.</li>
-              <li>Sets the camera parameters using <code>camera.setParameters()</code>.</li>
-              <li>Sets the camera preview to a <code>SurfaceTexture</code> using <code>camera.setPreviewTexture(new SurfaceTexture(0))</code>. This is required to start the preview, even if it is not displayed on the screen.</li>
-              <li>Starts the camera preview using <code>camera.startPreview()</code>.</li>
-              <li>Takes a picture using <code>camera.takePicture(null, null, pictureCallback)</code>, passing the <code>pictureCallback</code> to handle the image data.</li>
-              <li>Handles exceptions that may occur when starting the camera.</li>
-            </ul>
-            <pre>
-              <code>
-                @SimpleFunction
-                public void TakeAutoPicture() {
-                  // Check if we have permission to use the camera and write to external storage
-                  if (!havePermission) {
-                    String[] permissions;
-                    permissions = new String[] {CAMERA, WRITE_EXTERNAL_STORAGE};
-                    form.askPermission(
-                        new BulkPermissionRequest(this, "TakeAutoPicture", permissions) {
-                          @Override
-                          public void onGranted() {
-                            havePermission = true;
-                            Camera.this.TakeAutoPicture();
-                          }
-                        });
-                    return;
-                  }
-                  try {
-                    // Create a new camera instance
-                    camera = android.hardware.Camera.open();
-                    // Set the camera to use the largest supported picture size
-                    android.hardware.Camera.Parameters parameters = camera.getParameters();
-                    List&lt;android.hardware.Camera.Size&gt; supportedSizes = parameters.getSupportedPictureSizes();
-                    android.hardware.Camera.Size largestSize = null;
-                    for (android.hardware.Camera.Size size : supportedSizes) {
-                      if (largestSize == null
-                          || size.width * size.height > largestSize.width * largestSize.height) {
-                        largestSize = size;
-                      }
-                    }
-                    parameters.setPictureSize(largestSize.width, largestSize.height);
-                    camera.setParameters(parameters);
-                    // Set preview display to a SurfaceTexture
-                    // This is required to start the camera preview, but we won't actually display it
-                    camera.setPreviewTexture(new SurfaceTexture(0));
-                    camera.startPreview();
-                    // Take the picture, passing in the pictureCallback to handle the image data
-                    camera.takePicture(null, null, pictureCallback);
-          
-                  } catch (Exception e) {
-                    Log.e(TAG, "Error starting camera: " + e.getMessage());
-                  }
-                }
-              </code>
-            </pre>
-            <p><b>2. Callback <code>pictureCallback</code>:</b></p>
-            <p>This callback is invoked after the picture is taken and is responsible for saving it to disk.</p>
-            <ul>
-              <li>The <code>onPictureTaken()</code> method is called after the picture is taken.</li>
-              <li>Retrieves the image data in JPEG format as a byte array (<code>byte[] data</code>).</li>
-              <li>Creates a <code>ScopedFile</code> object using <code>FileUtil.getScopedPictureFile()</code> to obtain a secure path for saving the file.</li>
-              <li>Creates a <code>File</code> object based on the path.</li>
-              <li>Saves the image data to the file using <code>FileOutputStream</code>.</li>
-              <li>Closes the <code>FileOutputStream</code>.</li>
-              <li>Logs information about saving the picture.</li>
-              <li>Triggers the <code>AfterPicture()</code> event with the absolute path to the saved file.</li>
-              <li>Handles <code>IOException</code> exceptions that may occur during file saving.</li>
-              <li>Stops the camera preview using <code>camera.stopPreview()</code>.</li>
-              <li>Releases the camera resources using <code>camera.release()</code>.</li>
-            </ul>
-            <pre>
-              <code>
-                pictureCallback = new android.hardware.Camera.PictureCallback() {
-                  @Override
-                  public void onPictureTaken(final byte[] data, final android.hardware.Camera camera) {
-                    ScopedFile target = FileUtil.getScopedPictureFile(form, "jpg");
-                    File pictureFile = new File(URI.create(
-                              FileUtil.resolveFileName(form, target.getFileName(), target.getScope())));
-                    try {
-                      FileOutputStream fos = new FileOutputStream(pictureFile);
-                      fos.write(data);
-                      fos.close();
-                      Log.d(TAG, "Picture saved to: " + pictureFile.getAbsolutePath());
-                      AfterPicture(pictureFile.getAbsolutePath());
-                    } catch (IOException e) {
-                      Log.e(TAG, "Error accessing file: " + e.getMessage());
-                    } finally {
-                      camera.stopPreview();
-                      camera.release();
-                    }
-                  }
-                };
-              </code>
-            </pre>
-            <p><b>Adding a Preview:</b></p>
-  <p>The current implementation takes photos without a preview. To make the component more elegant, a live preview can be added. To do this, the component would need to be made visible and based on the <code>SurfaceView</code>. To set the preview, use <code>camera.setPreviewDisplay(surfaceView.getHolder());</code>.</p>
-</section>
-</div>
-    </main>
-    <script>
-        const hash = window.location.hash;
-        if (hash) {
-            const sectionId = hash.substring(1);
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.style.display = 'block';
-            }
-        }
-    </script>
+            <section id="app-inventor-design-challenge">
+                <h2 class="section-title">App Inventor Design Challenge</h2>
+                <p><b>1. Why did UseFront stop working?</b></p>
+                <p>In older versions of Android, applications could directly specify which camera (front or back) to use by adding an "extra" to the <code>MediaStore.ACTION_IMAGE_CAPTURE</code> intent. The <code>android.intent.extras.CAMERA_FACING</code> extra was used for this purpose, with values of 0 (back) or 1 (front). However, newer versions of Android (from Android 5.0 Lollipop onwards) modified this method by removing this "extra", and therefore it no longer works.</p>
+                <p><b>2. Automatic Photo Capture without User Intervention</b></p>
+                <p>In App Inventor, taking photos has traditionally required user interaction with an external camera application. The App Inventor application would invoke an intent to launch the camera app. The user would then have to manually press the "shutter button," and the camera app would return the URI of the captured image. This approach made it impossible to take photos automatically, for example, from the Clock component, without user involvement.</p>
+                <p>To enable automatic photo capture, it is necessary to use the camera API directly within the App Inventor component, without relying on an external application. Considering that App Inventor supports devices with a minimum SDK level of 7, the most reasonable solution is to use the deprecated <code>android.hardware.Camera</code> API.</p>
+                <p><b>Implementation:</b></p>
+                <p>Below are the key elements of the implementation for automatic photo capture without a preview:</p>
+                <p>Method - <code>TakeAutoPicture()</code>:</p>
+                <p>This method is responsible for initiating the photo-taking process.</p>
+                <ul>
+                  <li>Checks if the application has the necessary permissions to use the camera and write to external storage. If not, it requests these permissions from the user.</li>
+                  <li>Opens a camera instance using <code>android.hardware.Camera.open() </code>.</li>
+                  <li>Retrieves the list of supported picture sizes using <code>camera.getParameters().getSupportedPictureSizes()</code>.</li>
+                  <li>Selects the largest available picture size to ensure the best possible quality.</li>
+                  <li>Sets the selected picture size using <code>parameters.setPictureSize()</code>.</li>
+                  <li>Sets the camera parameters using <code>camera.setParameters()</code>.</li>
+                  <li>Sets the camera preview to a <code>SurfaceTexture</code> using <code>camera.setPreviewTexture(new SurfaceTexture(0))</code>. This is required to start the preview, even if it is not displayed on the screen.</li>
+                  <li>Starts the camera preview using <code>camera.startPreview()</code>.</li>
+                  <li>Takes a picture using <code>camera.takePicture(null, null, pictureCallback)</code>, passing the <code>pictureCallback</code> to handle the image data.</li>
+                </ul>
+<div class="code-size"><div class="code-container"><pre class="language-java"><code>
+@SimpleFunction
+public void TakeAutoPicture() {
+  // Check if we have permission to use the camera and write to external storage
+  if (!havePermission) {
+    String[] permissions;
+    permissions = new String[] {CAMERA, WRITE_EXTERNAL_STORAGE};
+    form.askPermission(
+        new BulkPermissionRequest(this, "TakeAutoPicture", permissions) {
+      @Override
+      public void onGranted() {
+        havePermission = true;
+        Camera.this.TakeAutoPicture();
+      }
+    });
+    return
+  }
+  try {
+    // Create a new camera instance
+    camera = android.hardware.Camera.open();
+    // Set the camera to use the largest supported picture size
+    android.hardware.Camera.Parameters parameters = camera.getParameters();
+    List&lt;android.hardware.Camera.Size&gt; supportedSizes = 
+            parameters.getSupportedPictureSizes();
+    android.hardware.Camera.Size largestSize = null;
+    for (android.hardware.Camera.Size size : supportedSizes) {
+      if (largestSize == null || size.width * size.height > 
+              largestSize.width * largestSize.height) {
+        largestSize = size;
+      }
+    }
+    parameters.setPictureSize(largestSize.width, largestSize.height);
+    camera.setParameters(parameters);
+    // Set preview display to a SurfaceTexture
+    // This is required to start the camera preview, but we won't actually display it
+    camera.setPreviewTexture(new SurfaceTexture(0));
+    camera.startPreview();
+    // Take the picture, passing in the pictureCallback to handle the image data
+    camera.takePicture(null, null, pictureCallback);
+  } catch (Exception e) {
+    Log.e(TAG, "Error starting camera: " + e.getMessage());
+  }
+}
+</code>
+                </pre>
+                </div></div>
+                <p>Callback <code>pictureCallback</code>:</p>
+                <p>This callback is invoked after the picture is taken and is responsible for saving it to disk.</p>
+                <ul>
+                  <li>The <code>onPictureTaken()</code> method is called after the picture is taken.</li>
+                  <li>Retrieves the image data in JPEG format as a byte array (<code>byte[] data</code>).</li>
+                  <li>Creates a <code>ScopedFile</code> object using <code>FileUtil.getScopedPictureFile()</code> to obtain a secure path for saving the file.</li>
+                  <li>Creates a <code>File</code> object based on the path.</li>
+                  <li>Saves the image data to the file using <code>FileOutputStream</code>.</li>
+                  <li>Triggers the <code>AfterPicture()</code> event with the absolute path to the saved file.</li>
+                </ul>
+                <div class="code-size">
+                <div class="code-container">
+                <pre class="language-java">
+<code>
+pictureCallback = new android.hardware.Camera.PictureCallback() {
+  @Override
+  public void onPictureTaken(final byte[] data, final android.hardware.Camera camera) {
+    ScopedFile target = FileUtil.getScopedPictureFile(form, "jpg");
+    File pictureFile = new File(URI.create(
+    FileUtil.resolveFileName(form, target.getFileName(), target.getScope())));
+    try {
+      FileOutputStream fos = new FileOutputStream(pictureFile);
+      fos.write(data);
+      fos.close();
+      Log.d(TAG, "Picture saved to: " + pictureFile.getAbsolutePath());
+      AfterPicture(pictureFile.getAbsolutePath());
+    } catch (IOException e) {
+      Log.e(TAG, "Error accessing file: " + e.getMessage());
+    } finally {
+      camera.stopPreview();
+      camera.release();
+    }
+  }
+};
+</code>
+                </pre>
+                </div></div>
+                <p>Adding a Preview:</p>
+                <p>The current implementation takes photos without a preview. To make the component more elegant, a live preview can be added. To do this, the component would need to be made visible and based on the <code>SurfaceView</code>. To set the preview, use <code>camera.setPreviewDisplay(surfaceView.getHolder());</code>.</p>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
 </body>
 </html>
