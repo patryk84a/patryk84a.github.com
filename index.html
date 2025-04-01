@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GSOC Application - Patryk F</title>
+    <title>GSOC 2025 Application - Patryk Frączek</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
     <style>
         body {
@@ -22,9 +22,7 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            box-sizing: border-box;
-
-           
+            box-sizing: border-box;           
         }
         
 
@@ -68,10 +66,8 @@
             padding: 1em;
             margin: .5em 0;
             overflow: auto;
-            border-radius: 0.3em;
-            
+            border-radius: 0.3em;            
         }
-
 
         .code-container{
           justify-content: center;
@@ -131,7 +127,7 @@
 <body>
     <div class="application-container">
         <header>
-            <h1>GSOC Application - Patryk F</h1>
+            <h1>GSOC Application - Patryk Frączek</h1>
         </header>
 
         <main>
@@ -141,9 +137,9 @@
             </section>
 
             <section id="proposed-summer-project">
-                <h2 class="section-title">Proposed summer project</h2>
-                I would like to continue working on the ListView component, which fascinates me with its possibilities. My recent PR with a new layout is just the beginning. I propose creating an "Element Layout Editor" that would allow for the creation of custom layouts beyond the five predefined ones. The editor would enable the use of images, main and detailed text, vertical and horizontal arrangements, and alignment settings. Additionally, I would like to add a grid layout, snapping elements as they scroll and I would like to complete the multi-select functions. I would also like to contribute to the development of ListView for iOS. I want this component to be as versatile, efficient and intuitive as possible.</p>
-              </section>
+              <h2 class="section-title">Proposed summer project</h2>
+              I would like to continue working on the ListView component, which fascinates me with its possibilities. My recent PR with a new layout is just the beginning. I propose creating an "Element Layout Editor" that would allow for the creation of custom layouts beyond the five predefined ones. The editor would enable the use of images, main and detailed text, vertical and horizontal arrangements, and alignment settings. I think the editor could be based on dragging defined components into the workspace and then defining the alignment of a given component. Additionally, I would like to add a grid layout, snapping elements as they scroll and I would like to complete the multi-select functions. I would also like to contribute to the development of ListView on iOS and rebuild the list item editor to use UIBinder. I want this component to be as versatile, efficient and intuitive as possible.</p>
+            </section>
 
             <section id="interest-in-introductory-programming">
                 <h2 class="section-title">Interest in introductory programming</h2>
@@ -151,12 +147,18 @@
             </section>
 
             <section id="experience-with-development-tools">
-                <h2 class="section-title">Experience with development tools</h2>
-                <p>My experience with development tools is mainly related to the App Inventor repository. I contributed to the refactoring of the ListView and Slider components and created the <code>@UsesXml</code> annotation. I have also created several extensions for App Inventor.</p>
-                <ul>
-                    <li><a href="https://github.com/patryk84a">My GitHub profile</a></li>
-                </ul>
-            </section>
+              <h2 class="section-title">Experience with development tools</h2>
+              <p>My experience with development tools is mainly related to the App Inventor repository. I contributed to the refactoring of the ListView and Slider components, created the <code>@UsesXml</code> annotation, and modified MockListView. Thanks to these few PRs, and creating a few extensions, I gained some experience in Java for Android, GWT, and Swift. I also learned the basics of working with GitHub from the command line. Below are links to my PRs:</p>
+              <ul>
+                  <li><a href="https://github.com/mit-cml/appinventor-sources/pull/3427">New layout for ListView</a></li>
+<li><a href="https://github.com/mit-cml/appinventor-sources/pull/3280">MockListView Improvement</a></li>
+<li><a href="https://github.com/mit-cml/appinventor-sources/pull/3292">Adding UsesXml annotation</a></li>
+<li><a href="https://github.com/mit-cml/appinventor-sources/pull/3152">Slider Update</a></li>
+<li><a href="https://github.com/mit-cml/appinventor-sources/pull/3405">New functions in ListView for ios</a></li>
+<li><a href="https://github.com/mit-cml/appinventor-sources/pull/3235">ListView Refactoring</a></li>
+
+              </ul>
+          </section>
 
             <section id="experience-with-teams">
                 <h2 class="section-title">Experience with teams, online developer communities, and large code bases</h2>
@@ -166,11 +168,23 @@
                 </ul>
             </section>
 
+            <section id="non-trivial-app">
+              <h2 class="section-title">Challenge 1: Creating a non-trivial app</h2>
+                  <p>Apk file download link:</p>
+                  <ul>
+                      <li><a href="Morse_Code_App.apk">Download APK</a></li>
+                  </ul>
+                  <p>Aia file download link:</p>
+                  <ul>
+                      <li><a href="Morse_Code_App.apk">Download APK</a></li>
+                  </ul>
+            </section>
+
             <section id="app-inventor-design-challenge">
-                <h2 class="section-title">App Inventor Design Challenge</h2>
-                <p><b>1. Why did UseFront stop working?</b></p>
+                <h2 class="section-title">Challenge 2: Design challenge - Enhancing the Camera operation</h2>
+                <p><b>A. Why did UseFront stop working?</b></p>
                 <p>In older versions of Android, applications could directly specify which camera (front or back) to use by adding an "extra" to the <code>MediaStore.ACTION_IMAGE_CAPTURE</code> intent. The <code>android.intent.extras.CAMERA_FACING</code> extra was used for this purpose, with values of 0 (back) or 1 (front). However, newer versions of Android (from Android 5.0 Lollipop onwards) modified this method by removing this "extra", and therefore it no longer works.</p>
-                <p><b>2. Automatic Photo Capture without User Intervention</b></p>
+                <p><b>B. Automatic Photo Capture without User Intervention</b></p>
                 <p>In App Inventor, taking photos has traditionally required user interaction with an external camera application. The App Inventor application would invoke an intent to launch the camera app. The user would then have to manually press the "shutter button," and the camera app would return the URI of the captured image. This approach made it impossible to take photos automatically, for example, from the Clock component, without user involvement.</p>
                 <p>To enable automatic photo capture, it is necessary to use the camera API directly within the App Inventor component, without relying on an external application. Considering that App Inventor supports devices with a minimum SDK level of 7, the most reasonable solution is to use the deprecated <code>android.hardware.Camera</code> API.</p>
                 <p><b>Implementation:</b></p>
